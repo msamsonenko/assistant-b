@@ -6,17 +6,17 @@ const { SECRET_KEY } = process.env; //get SECRET_KEY from .env file
 
 const authenticate = async (req, res, next) => {
 	try {
-		const { authorization } = req.headers; //extract authorization from headers
+		const { authorization = "" } = req.headers; //extract authorization from headers
 		const [bearer, token] = authorization.split(" "); // split into two, "Bearer" = bearer; "Token" = token
 		//check bearer var
 		if (bearer !== "Bearer") {
-			throw createError(404);
+			throw createError(401);
 		}
 		try {
 			const { id } = jwt.verify(token, SECRET_KEY); //verify if the token is valid
 			const user = await User.findById(id); // find user by id
-			//throw error if not found
-			if (!user) {
+			//throw error if not found oroken invalid
+			if (!user || !user.token) {
 				throw createError(404);
 			}
 			req.user = user; //add user to req.user

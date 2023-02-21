@@ -11,7 +11,7 @@ const aptSchema = Schema(
 			type: Number,
 			required: true,
 		},
-		owner: {
+		landlord: {
 			type: String,
 			required: false,
 		},
@@ -23,6 +23,10 @@ const aptSchema = Schema(
 			type: Number,
 			required: true,
 		},
+		owner: {
+			type: Schema.Types.ObjectId,
+			ref: "user",
+		},
 	},
 	{ versionKey: false, timestamps: true }
 );
@@ -30,7 +34,7 @@ const aptSchema = Schema(
 const apt = Joi.object({
 	address: Joi.string().required(),
 	floor: Joi.number().required(),
-	owner: Joi.string(),
+	landlord: Joi.string(),
 	tenants: Joi.string().required(),
 	ukv: Joi.number().required(),
 });

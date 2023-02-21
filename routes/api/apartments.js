@@ -13,7 +13,7 @@ const router = express.Router(); //create express router
 //define routes
 
 //get all apartments
-router.get("/", ctrlWrapper(ctrl.getAll));
+router.get("/", authenticate, ctrlWrapper(ctrl.getAll));
 //get one apartment by id
 router.get("/:id", isValiId, ctrlWrapper(ctrl.getById));
 //add new apartment

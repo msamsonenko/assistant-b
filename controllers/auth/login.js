@@ -22,6 +22,7 @@ const login = async (req, res) => {
 	};
 	//create token
 	const token = jwt.sign(payload, SECRET_KEY, { expiresIn: "1h" });
+	await User.findByIdAndUpdate(user._id, { token }); //find user by id and and assign token value to the token field
 	res.json({ token }); //send token as response to front end
 };
 
